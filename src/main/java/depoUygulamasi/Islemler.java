@@ -176,13 +176,15 @@ public class Islemler {
                 urunTanimlama.setRaf("Raf- " + raf);
                 urunListele();
             } else {
-                System.out.println("hata");
+                System.err.println("Girdiğiniz ID ile eşleşen ürün bulunamadı");
+                System.out.println();
                 urunuRafaKoy(urunId, raf);
             }
 
         } catch (java.util.InputMismatchException e) {
-            System.err.println("hatalı giriş");
+            System.err.println("Hatalı ID numarası girdiniz. ID Numarası rakamlardan oluşmaktadır.");
             scan.next(); // Hatalı girişi temizle
+            System.out.println();
             urunuRafaKoy(urunId, raf); // Metodu tekrar çağır
             return;
         }
