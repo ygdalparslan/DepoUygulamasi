@@ -4,12 +4,11 @@ public class UrunTanimlama {
 
     /*
     1-) burada oncelikle urunun tanimlamasi  yapilir.
-id
 urunIsmi
 uretici
 miktar
 birim ve
-raf (6 adet fields mevcut)
+raf (5 adet fields mevcut)
 
      */
 
