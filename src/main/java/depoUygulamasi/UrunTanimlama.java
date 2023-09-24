@@ -2,15 +2,14 @@ package depoUygulamasi;
 
 public class UrunTanimlama {
 
-    /*
-    1-) burada oncelikle urunun tanimlamasi  yapilir.
+/*
+1-) burada oncelikle urunun tanimlamasi  yapilir.
 urunIsmi
 uretici
 miktar
 birim ve
 raf (5 adet fields mevcut)
-
-     */
+*/
 
     private String urunIsmi;
     private String uretici;

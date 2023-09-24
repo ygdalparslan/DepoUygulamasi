@@ -8,7 +8,6 @@ urunuRafaKoy    ==> listeden urunu sececegiz ve id numarasina gore urunu rafa ko
 urunCikisi      ==> listeden urunu sececegiz ve urunun cikis yapcagiz. burada urun listesinden sadece miktarda degisiklik yapilacak.
 urun adedi 0 dan az olamaz. 0 olunca urun tanimlamasi silinmesin. sadece miktari 0 olsun.
 ===> yaptigimiz tum degisiklikler listede de gorunsun.
-
  */
 
 
@@ -20,17 +19,19 @@ public class Islemler {
 
     UrunTanimlama urunTanimlama = new UrunTanimlama();
 
-    int urunId = 1000;
+    int urunId = 1000;//ID 1000 den başlatıldı
 
     Scanner scan = new Scanner(System.in);
+
+    //Hızlı ve tekrarsız olması için ürün listesinde HashMap kullanıldı
     HashMap<Integer, UrunTanimlama> urunlistesi = new HashMap<>();
 
 
-    //2-) methodlar olusturacagiz.
+    //Bu method ile kullanıcıya seçim yapması için do-while ie menü sunuldu
     public void start() {
 
+        //Kullanıcı 0 seçip çıkış yapana kadar döngünün devamı için oluşturuldu
         int select;
-
         do {
             System.out.println("---DEPO UYGULAMASI--");
             System.out.println("Lütfen yapmak istediğiniz işlemi seçiniz" +
@@ -48,10 +49,10 @@ public class Islemler {
             } catch (java.util.InputMismatchException e) {
                 System.out.println("Geçersiz giriş. Lütfen bir rakam girin.");
                 scan.next(); // Geçersiz girişi tüket
-                select = -1;
-                continue;    // Döngüyü tekrar başlat
+                start();
+                return;
             }
-            // String secim = scan.next().toUpperCase(Locale.ROOT);
+
             switch (select) {
                 case 1:
                     urunTanimlama(urunTanimlama.getUrunIsmi(), urunTanimlama.getUretici(), urunTanimlama.getBirim());
@@ -80,9 +81,8 @@ public class Islemler {
 
     }
 
-
-    //urunTanimlama   ==>  urunun ismi, ureticisi ve birimi girilecek. id  alınacak.
-
+    //urunTanimlama   ==> id  alınacak otomatik oluşturularak, urunun ismi, ureticisi ve birimi girilecek.
+    //urunun adeti ve raf numarasi tanimlama yapilmadiysa default deger görünecek.
 
     public void urunTanimlama(String urunIsmi, String uretici, String birim) {
 
@@ -95,12 +95,14 @@ public class Islemler {
         birim = scan.next().toUpperCase();
         UrunTanimlama yeniUrun = new UrunTanimlama(urunIsmi, uretici, 0, birim, null);
         urunlistesi.put(urunId, yeniUrun);
+        urunListele();
     }
 
-    //urunListele     ==> tanimlanan urunler listelenecek. urunun adeti ve raf numarasi tanimlama yapilmadiysa default deger gorunsun.
+    //urunListele     ==> tanimlanan urunler listelenecek.
 
     public void urunListele() {
 
+        //printf kullanıldı.
         System.out.printf("%-10s %-15s %-20s %-10s %-10s %-10s\n", "Ürün ID", "Ürün İsmi", "Üretici", "Miktarı", "Birimi", "Raf");
         System.out.println("--------------------------------------------------------------------------");
 
@@ -121,7 +123,7 @@ public class Islemler {
 
     public void urunGirisi(int urunId) {
 
-        if (urunlistesi.get(urunId) == null) {
+        if (urunlistesi.get(urunId) == null) {//Tanımlı ürün olmadığı zaman hata mesajı verildi
             System.out.println("Tanımlı ürün yok");
 
         } else {
@@ -153,12 +155,11 @@ public class Islemler {
 
                 } else {
                     System.err.println("Hatalı ID girdiniz");
-                    //scan.next(); // Hatalı girişi temizle
                     urunGirisi(urunId);
                 }
 
             } catch (java.util.InputMismatchException e) {
-                System.err.println("Hatalı giriş");
+                System.err.println("Hatalı ID numarası girdiniz. ID Numarası rakamlardan oluşmaktadır.");
                 scan.next(); // Hatalı girişi temizle
                 urunGirisi(urunId); // Metodu tekrar çağır
                 return;
@@ -167,7 +168,7 @@ public class Islemler {
 
     }
 
-    //urunuRafaKoy    ==> listeden urunu sececegiz ve id numarasina gore urunu rafa koyacagiz.
+    //urunuRafaKoy    ==> listeden id numarasina gore urunu sececegiz ve urunu rafa koyacagiz.
 
     public void urunuRafaKoy(int urunId, String raf) {
 
@@ -191,8 +192,7 @@ public class Islemler {
                     System.out.println("Raf = " + raf + "\n");
                     urunListele();
                 } else {
-                    System.err.println("Girdiğiniz ID ile eşleşen ürün bulunamadı");
-                    System.out.println();
+                    System.err.println("Hatalı ID girdiniz");
                     urunuRafaKoy(urunId, raf);
                 }
 
@@ -204,7 +204,6 @@ public class Islemler {
                 urunuRafaKoy(urunId, raf); // Metodu tekrar çağır
                 return;
             }
-
 
         }
     }
@@ -227,6 +226,7 @@ public class Islemler {
                     System.out.println("Lütfen Çıkış yapmak istediğiniz ürünün Miktarını giriniz");
                     int miktar = scan.nextInt();
 
+                    //Çıkış yapılacak miktar depodaki miktardan fazla olamaz.
                     if (miktar > urunTanimlama.getMiktar()) {
                         System.out.println("Çıkış için yeterli miktar yok" +
                                 "\nMevcut Miktar: " + urunTanimlama.getMiktar());
@@ -245,15 +245,12 @@ public class Islemler {
                     System.err.println("Hatalı ID girdiniz");
                     urunCikisi(urunId);
                 }
-
             } catch (java.util.InputMismatchException e) {
-                System.err.println("Hatalı giriş");
+                System.err.println("Hatalı ID numarası girdiniz. ID Numarası rakamlardan oluşmaktadır.");
                 scan.next(); // Hatalı girişi temizle
                 urunCikisi(urunId); // Metodu tekrar çağır
                 return;
             }
-
-
         }
     }
 

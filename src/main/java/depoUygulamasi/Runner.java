@@ -7,8 +7,6 @@ public class Runner {
         Islemler islemler = new Islemler();
         islemler.start();
 
-
-
     }
 
 }
