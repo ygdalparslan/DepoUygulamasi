@@ -1,23 +1,15 @@
 package depoUygulamasi;
-
+//uygulamanın temel özellikleri tanımlandı.
 public class UrunTanimlama {
 
-/*
-1-) burada oncelikle urunun tanimlamasi  yapilir.
-urunIsmi
-uretici
-miktar
-birim ve
-raf (5 adet fields mevcut)
-*/
-
+    //Ürün İsmi, Üretici, Miktar, Birim ve Raf olmak üzere 5 farklı private Field oluşturuldu.
     private String urunIsmi;
     private String uretici;
     private int miktar;
     private String birim;
     private String raf;
 
-
+    //Parametreli constructor oluşturuldu.
     public UrunTanimlama(String urunIsmi, String uretici, int miktar, String birim, String raf) {
         this.urunIsmi = urunIsmi;
         this.uretici = uretici;
@@ -26,10 +18,11 @@ raf (5 adet fields mevcut)
         this.raf = raf;
     }
 
+    //Parametresiz constructor oluşturuldu.
     public UrunTanimlama() {
-
     }
 
+    //Fieldlar için getter ve setter methodlar oluşturuldu.
     public String getUrunIsmi() {
         return urunIsmi;
     }
